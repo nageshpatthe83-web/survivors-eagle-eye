@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Eagle Eye | AI-Powered Industrial Control Panel Quality Inspection</title>
+  <meta name="description" content="Project Eagle Eye: Automated industrial cabinet inspection using multimodal AI, computer vision, OCR, and deterministic specification matching for Emerson track at Code Apex.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">PROJECT <span>EAGLE EYE</span></div>
+          <div class="brand-sub">AI-Powered Industrial Control Panel Quality Inspection • Track 01 — Emerson</div>
+        </div>
+      </div>
+
+      <div class="team-pill">
+        <span>Team: <strong>TEAM SURVIVORS</strong></span>
+        <span class="badge-tag">Nagesh Patthe (Lead)</span>
+        <span class="badge-tag">Abhijeet More</span>
+        <span class="badge-tag">Shubham Yadav</span>
+        <span class="badge-tag">Prathmesh Dandge</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main 3-Column Studio Layout -->
+  <main class="dashboard-layout">
+
+    <!-- LEFT COLUMN: Multi-Input Specifications & Uploads -->
+    <aside class="glass-panel">
+      <div class="panel-header">
+        <h3><span>📥</span> Inspection Inputs</h3>
+        <span class="badge-tag" id="input-status-badge">Ready</span>
+      </div>
+
+      <div class="panel-body">
+        <div class="upload-group">
+          <label class="upload-label"><span>📷</span> 1. Cabinet Photograph (Built Panel)</label>
+          <div class="file-dropzone" onclick="document.getElementById('input-cabinet').click()">
+            <span class="file-name-preview" id="label-cabinet">cabinet_initial.jpg (Sample)</span>
+            <input type="file" id="input-cabinet" accept="image/*">
+            <span class="badge-tag">Select</span>
+          </div>
+        </div>
+
+        <div class="upload-group">
+          <label class="upload-label"><span>📐</span> 2. Engineering Blueprint (PDF Drawing)</label>
+          <div class="file-dropzone" onclick="document.getElementById('input-blueprint').click()">
+            <span class="file-name-preview" id="label-blueprint">blueprint_schematic.pdf (Sample)</span>
+            <input type="file" id="input-blueprint" accept=".pdf">
+            <span class="badge-tag">Select</span>
+          </div>
+        </div>
+
+        <div class="upload-group">
+          <label class="upload-label"><span>📋</span> 3. Wire & Label Schedule (Excel/CSV)</label>
+          <div class="file-dropzone" onclick="document.getElementById('input-wire').click()">
+            <span class="file-name-preview" id="label-wire">wire_label_list.xlsx (Sample)</span>
+            <input type="file" id="input-wire" accept=".xlsx,.csv">
+            <span class="badge-tag">Select</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+          <button class="btn-primary" id="btn-run-inspect">
+            <span>🚀</span> Run AI Quality Inspection
+          </button>
+          <button class="btn-secondary" id="btn-load-demo">
+            <span>⚡</span> Load Emerson Panel Demo
+          </button>
+          <button class="btn-secondary btn-recheck" id="btn-open-recheck">
+            <span>🔄</span> Closed-Loop Re-Check
+          </button>
+          <button class="btn-secondary" id="btn-view-report">
+            <span>📄</span> Export Official QC Certificate
+          </button>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.72rem; color: var(--text-dim);">
+          <div>Standard: <strong>IEC 61439-2 / UL 508A</strong></div>
+          <div>Model: <strong>CP-415V-EMR-PRO</strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN: Interactive Inspection Canvas & Evidence Detail -->
+    <section class="glass-panel viewer-panel">
+      <div class="viewer-toolbar">
+        <div class="toolbar-group">
+          <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);" id="view-mode-title">Cabinet Inspection View</span>
+          <span class="status-badge-overall status-fail" id="center-status-badge">FAIL (3 Issues Detected)</span>
+        </div>
+        <div class="toolbar-group">
+          <button class="tool-btn active" id="btn-toggle-boxes">Bounding Boxes</button>
+          <button class="tool-btn" id="btn-toggle-labels">Labels</button>
+          <button class="tool-btn" id="btn-fit-screen">Fit</button>
+        </div>
+      </div>
+
+      <div class="canvas-viewport" id="viewport">
+        <div class="image-canvas-container" id="canvas-container">
+          <img id="main-cabinet-img" src="/sample_inputs/cabinet_initial.jpg" alt="Cabinet Inspection View" class="cabinet-img">
+          <svg id="svg-overlay" class="overlay-svg"></svg>
+        </div>
+      </div>
+
+      <!-- Evidence Crop & Finding Inspector Card -->
+      <div class="evidence-inspector-card" id="evidence-drawer">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h4 id="evidence-title" style="font-size: 0.85rem; color: #f43f5e; font-weight: 700;">[FAIL] QF2 — Label Mismatch</h4>
+          <span id="evidence-rule-badge" class="badge-tag">Rule: Label Accuracy</span>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 1rem; margin-top: 0.5rem;">
+          <img id="evidence-snippet-img" src="/sample_inputs/cabinet_initial.jpg" alt="Zoomed Snippet" class="evidence-preview-img">
+          <div style="font-size: 0.76rem; display: flex; flex-direction: column; gap: 0.35rem;">
+            <div><strong>Location:</strong> <span id="evidence-location">Rail 1 (Slot 2)</span></div>
+            <div><strong>Expected:</strong> <code id="evidence-expected">Label 'QF2' • MCB 16A</code></div>
+            <div><strong>Observed:</strong> <code id="evidence-observed" style="color: #f43f5e;">Label 'QFZ' • Character mismatch</code></div>
+            <div><strong>Finding:</strong> <span id="evidence-notes" style="color: var(--text-secondary);">Character mismatch detected: observed 'QFZ' vs expected 'QF2'. Verify component markings.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: QC Summary & Itemized Checklist -->
+    <aside class="glass-panel">
+      <div class="panel-header">
+        <h3><span>📊</span> QC Inspection Results</h3>
+        <span class="status-badge-overall status-fail" id="summary-overall-badge">FAIL</span>
+      </div>
+
+      <div class="panel-body">
+        <div class="stats-strip">
+          <div class="stat-box">
+            <div class="stat-val" id="stat-total">7</div>
+            <div class="stat-label">Total Checks</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" style="color: #10b981;" id="stat-passed">3</div>
+            <div class="stat-label">Passed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" style="color: #f43f5e;" id="stat-failed">3</div>
+            <div class="stat-label">Failed</div>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="checklist-tabs">
+          <button class="tab-btn active" data-filter="all">All (<span id="count-all">7</span>)</button>
+          <button class="tab-btn" data-filter="FAIL">Failed (<span id="count-fail">3</span>)</button>
+          <button class="tab-btn" data-filter="NEEDS_REVIEW">Review (<span id="count-review">1</span>)</button>
+          <button class="tab-btn" data-filter="PASS">Passed (<span id="count-pass">3</span>)</button>
+        </div>
+
+        <!-- Checklist Cards Container -->
+        <div class="checklist-container" id="checklist-cards">
+          <!-- Populated dynamically via app.js -->
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Closed-Loop Verification Modal -->
+  <div id="recheck-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem;">
+        <h3 style="font-size: 1.1rem; color: #fff; font-weight: 700;">🔄 Closed-Loop Re-Check Verification</h3>
+        <button id="btn-close-modal" style="background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.75rem;">
+        Upload a photograph of the corrected cabinet after physical fixes. Project Eagle Eye automatically re-inspects the panel, confirms resolved defects, and issues a final compliance certificate.
+      </p>
+
+      <div style="display: flex; gap: 1rem; align-items: center; margin: 1rem 0;">
+        <input type="file" id="input-corrected-photo" accept="image/*" style="display: none;">
+        <button class="btn-secondary" onclick="document.getElementById('input-corrected-photo').click()">
+          <span>📁</span> Upload Corrected Cabinet Photo
+        </button>
+        <button class="btn-primary" id="btn-submit-recheck">
+          <span>⚡</span> Verify Corrections (Demo Corrected Image)
+        </button>
+      </div>
+
+      <div class="compare-grid" id="compare-section">
+        <div class="compare-col">
+          <div style="font-weight: 700; color: #f43f5e;">Before Correction (Initial Run)</div>
+          <div style="font-size: 0.75rem; color: var(--text-dim);">3 Discrepancies Flagged</div>
+          <img src="/sample_inputs/cabinet_initial.jpg" alt="Initial Inspection">
+        </div>
+        <div class="compare-col">
+          <div style="font-weight: 700; color: #10b981;" id="recheck-after-title">After Correction (Re-Check)</div>
+          <div style="font-size: 0.75rem; color: #10b981;" id="recheck-resolved-text">Awaiting Verification</div>
+          <img id="recheck-compare-img" src="/sample_inputs/cabinet_corrected.jpg" alt="Corrected Inspection">
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--border-subtle); padding-top: 0.75rem;">
+        <button class="btn-secondary" id="btn-modal-cancel">Close</button>
+        <button class="btn-primary" id="btn-download-corrected-cert" style="display: none;">
+          <span>📄</span> Download Verified Certificate
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Client Script -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
